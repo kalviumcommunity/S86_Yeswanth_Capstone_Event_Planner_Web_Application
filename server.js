@@ -1,19 +1,14 @@
-const express = require('express');
-const cors = require('cors');
-const guestRoutes = require('./routes/guestRoutes');
-
+const express = require("express");
 const app = express();
-const PORT = 3000;
+const guestRoutes = require("./routes/guestRoutes");
 
-app.use(cors());
+// Middleware to parse JSON
 app.use(express.json());
 
-app.use('/guests', guestRoutes);
+// Routes
+app.use("/", guestRoutes);
 
-app.get('/', (req, res) => {
-  res.send('Welcome to the Event Planner API!');
-});
-
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+// Server
+app.listen(3000, () => {
+  console.log("Server is running on port 3000");
 });
