@@ -1,7 +1,6 @@
-const guests = [
-  { id: 1, name: 'Alice Johnson', status: 'Confirmed' },
-  { id: 2, name: 'Bob Smith', status: 'Pending' },
-  { id: 3, name: 'Charlie Brown', status: 'Declined' }
+const guestData = [
+  { id: 1, name: "John Doe", status: "Confirmed", type: "Adult" },
+  { id: 2, name: "Jane Smith", status: "Pending", type: "Child" }
 ];
 
-module.exports = guests;
+module.exports = guestData;
