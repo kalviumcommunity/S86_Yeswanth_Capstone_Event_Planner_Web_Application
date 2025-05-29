@@ -1,14 +1,15 @@
-const express = require("express");
+const express = require('express');
 const app = express();
-const guestRoutes = require("./routes/guestRoutes");
+const guestRoutes = require('./routes/guestRoutes');
 
-// Middleware to parse JSON
 app.use(express.json());
+app.use('/guests', guestRoutes);
 
-// Routes
-app.use("/", guestRoutes);
+app.get('/', (req, res) => {
+  res.send('Welcome to the Guest Management API');
+});
 
-// Server
-app.listen(3000, () => {
+const PORT = 3000;
+app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${3000}`);
 });

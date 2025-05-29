@@ -1,27 +1,25 @@
-const guestData = require("../data/guestData");
+let guests = require('../data/guestData');
 
-// GET controller
-const getGuests = (req, res) => {
-  res.json(guestData);
+exports.getGuests = (req, res) => {
+  res.json(guests);
 };
 
-// POST controller
-const addGuest = (req, res) => {
-  const { name, status, type } = req.body;
+exports.addGuest = (req, res) => {
+  const { name, email } = req.body;
+  const newGuest = { id: guests.length + 1, name, email };
+  guests.push(newGuest);
+  res.status(201).json(newGuest);
+};
 
-  if (!name || !status || !type) {
-    return res.status(400).json({ error: "All fields are required." });
+exports.updateGuest = (req, res) => {
+  const { id } = req.params;
+  const { name, email } = req.body;
+  let guest = guests.find(g => g.id == id);
+  if (guest) {
+    guest.name = name || guest.name;
+    guest.email = email || guest.email;
+    res.json(guest);
+  } else {
+    res.status(404).json({ message: 'Guest not found' });
   }
-
-  const newGuest = {
-    id: guestData.length + 1,
-    name,
-    status,
-    type,
-  };
-
-  guestData.push(newGuest);
-  res.status(201).json({ message: "Guest added successfully!", guest: newGuest });
 };
-
-module.exports = { getGuests, addGuest };
