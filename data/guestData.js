@@ -1,6 +1,6 @@
-const guestData = [
-  { id: 1, name: "John Doe", status: "Confirmed", type: "Adult" },
-  { id: 2, name: "Jane Smith", status: "Pending", type: "Child" }
+let guests = [
+  { id: 1, name: 'Alice', email: 'alice@example.com' },
+  { id: 2, name: 'Bob', email: 'bob@example.com' }
 ];
 
-module.exports = guestData;
+module.exports = guests;

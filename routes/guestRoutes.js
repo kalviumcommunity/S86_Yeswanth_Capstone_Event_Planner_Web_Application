@@ -1,8 +1,9 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const { getGuests, addGuest } = require("../controller/guestController");
+const guestController = require('../controller/guestController');
 
-router.get("/guests", getGuests);
-router.post("/guests", addGuest);
+router.get('/', guestController.getGuests);
+router.post('/', guestController.addGuest);
+router.put('/:id', guestController.updateGuest);
 
 module.exports = router;
