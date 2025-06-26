@@ -4,7 +4,8 @@
   "description": "The **Event Planner Web Application** is a full-stack app to create, manage, and attend events. Users can sign up, create events with detailed information, invite others, and track RSVP responses (Yes, No, Maybe). A calendar view helps visualize upcoming events. The platform is ideal for organizing personal, study group, or community events.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",

@@ -1,25 +1,32 @@
-let guests = require('../data/guestData');
+const Guest = require('../models/Guest');
 
-exports.getGuests = (req, res) => {
-  res.json(guests);
+exports.getGuests = async (req, res) => {
+  try {
+    const guests = await Guest.find();
+    res.json(guests);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
-exports.addGuest = (req, res) => {
-  const { name, email } = req.body;
-  const newGuest = { id: guests.length + 1, name, email };
-  guests.push(newGuest);
-  res.status(201).json(newGuest);
+exports.addGuest = async (req, res) => {
+  try {
+    const { name, email } = req.body;
+    const guest = new Guest({ name, email });
+    await guest.save();
+    res.status(201).json(guest);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
-exports.updateGuest = (req, res) => {
-  const { id } = req.params;
-  const { name, email } = req.body;
-  let guest = guests.find(g => g.id == id);
-  if (guest) {
-    guest.name = name || guest.name;
-    guest.email = email || guest.email;
+exports.updateGuest = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const guest = await Guest.findByIdAndUpdate(id, req.body, { new: true });
+    if (!guest) return res.status(404).json({ message: "Guest not found" });
     res.json(guest);
-  } else {
-    res.status(404).json({ message: 'Guest not found' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };
