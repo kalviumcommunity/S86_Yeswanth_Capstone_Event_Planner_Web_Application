@@ -1,0 +1,38 @@
+services:
+  db:
+    image: mongo:latest
+    container_name: eventplanner_db
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    build: ./backend
+    container_name: eventplanner_backend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URI=mongodb://db:27017/eventplanner
+      - PORT=3000
+      - JWT_SECRET=changeme_locally
+      - FRONTEND_URL=http://localhost
+    depends_on:
+      - db
+    volumes:
+      - uploads_data:/usr/src/app/uploads
+
+  frontend:
+    build: ./frontend/client
+    container_name: eventplanner_frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  mongo_data:
+  uploads_data:

@@ -1,34 +1,57 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import React, { useState } from 'react'
+import { AuthProvider } from './AuthContext'
+import Landing from './components/Landing'
+import Home from './components/Home'
+import AuthPage from './components/AuthPage'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+function AppContent() {
+  const [screen, setScreen] = useState('landing')
+  const [initialTab, setInitialTab] = useState('dashboard')
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      {screen === 'landing' && (
+        <Landing 
+          onEnter={(tab = 'dashboard') => {
+            setInitialTab(tab);
+            setScreen('home');
+          }} 
+          onAuth={(mode) => {
+            localStorage.setItem('auth_initial_mode', mode);
+            setScreen('auth');
+          }}
+        />
+      )}
+      {screen === 'auth' && (
+        <AuthPage 
+          onBack={() => setScreen('landing')} 
+          onSuccess={() => setScreen('home')} 
+          onEnterGuest={(tab = 'dashboard') => {
+            setInitialTab(tab);
+            setScreen('home');
+          }}
+        />
+      )}
+      {screen === 'home' && (
+        <Home 
+          initialTab={initialTab}
+          onAuthRedirect={(mode) => {
+            localStorage.setItem('auth_initial_mode', mode);
+            setScreen('auth');
+          }}
+          onGoBack={() => setScreen('landing')}
+        />
+      )}
     </>
+  )
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   )
 }
 

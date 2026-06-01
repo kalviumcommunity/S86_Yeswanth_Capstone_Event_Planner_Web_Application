@@ -83,3 +83,18 @@ The **Event Planner Web Application** is a full-stack app to create, manage, and
 ## ✅ Setup Instructions
 - Fork this repo and clone it locally
 - Follow weekly tasks as per the plan above
+
+## 🛠 Development
+
+Backend:
+
+- Copy `backend/.env.example` to `backend/.env` and fill values (do NOT commit this file).
+- Start the backend: run `npm install` inside `backend` and then `npm start` (or `npm run dev` if you have nodemon).
+
+Frontend:
+
+- In `frontend/client` create a `.env` file with `VITE_API_URL=http://localhost:3000` to point to the backend during development.
+- Install and run the frontend: `npm install` then `npm run dev`.
+
+Security note: remove any real credentials from the repo and keep `.env` files local. I added `backend/.gitignore` and `.env.example` for safety.
+
